@@ -1,0 +1,7 @@
+bin/
+obj/
+.idea/
+data/
+.DS_Store
+*.docx
+*.pdf

@@ -1,0 +1,36 @@
+PASS 1.6 exact PDF pattern n=5
+PASS 1.6 n=1
+[0, 0]: [1, 0]: [0, 1]: [1, 1]: [0, 2]: [1, 2]: PASS 1.6 input by columns
+PASS 1.6 900 four-digit even-digit numbers
+PASS 3.6 expression online example
+PASS 3.6 rectangular transpose
+PASS 3.6 mismatched dimensions rejected
+PASS 3.6 overflow detected
+PASS 2.6 nearest repeated extrema
+PASS 2.6 equal values zero steps
+PASS 2.6 100 independent BFS comparisons
+PASS 4.6 negative k and stable order
+PASS 4.6 Int32.MinValue divisible by -1
+PASS 4.6 zero divisor rejected
+PASS 4.6 full Int32 random range
+PASS 5.6 binary and XML roundtrip all fields
+PASS 5.6 maximum constructor price
+PASS 5.6 empty data no constructor
+PASS 5.6 free constructor exists
+PASS 6.6 zero-based index sum
+PASS 6.6 empty file sum zero
+PASS 7.6 multiple numbers per line
+PASS 7.6 product beyond Int64
+PASS 7.6 no matching values
+PASS 7.6 zero is multiple
+PASS 8.6 Russian alphabet including Yo
+PASS STYLE AST no auto properties lambdas LINQ; fields; 65 columns
+TOTAL: 27 passed
+
+Консольные сценарии: 11/11 успешно.
+Сборка: 0 ошибок, 0 предупреждений.
+dotnet format whitespace --verify-no-changes: успешно.
+Повторная проверка 28.10.2026:
+Имена типов, методов, свойств, параметров и переменных проверены по AST.
+IDE0044, IDE0059, IDE0060: замечаний нет.
+Явные типы, полные new и блочные namespace сохранены по образцу Lab2.
