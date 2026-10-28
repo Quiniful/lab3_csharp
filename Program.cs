@@ -62,6 +62,10 @@ namespace Lab3
                 {
                     Console.WriteLine(error.Message);
                 }
+                catch (ArgumentException error)
+                {
+                    Console.WriteLine(error.Message);
+                }
             }
         }
 

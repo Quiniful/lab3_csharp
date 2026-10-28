@@ -103,10 +103,17 @@ namespace Lab3
 
         private static void CheckSize(int rows, int columns)
         {
-            if (rows <= 0 || columns <= 0)
+            if (rows < 1 || rows > 30)
             {
                 throw new ArgumentOutOfRangeException(
-                    nameof(rows), "Размеры должны быть > 0.");
+                    nameof(rows),
+                    "Число строк должно быть 1-30.");
+            }
+            if (columns < 1 || columns > 30)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(columns),
+                    "Число столбцов должно быть 1-30.");
             }
         }
 

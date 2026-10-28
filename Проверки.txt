@@ -24,13 +24,121 @@ PASS 7.6 product beyond Int64
 PASS 7.6 no matching values
 PASS 7.6 zero is multiple
 PASS 8.6 Russian alphabet including Yo
+PASS VALIDATION valid manual constructor
+PASS VALIDATION atomic age range update
+PASS VALIDATION checked setters XML roundtrip
+PASS VALIDATION direct validation case 0
+PASS VALIDATION no file mutation case 0
+PASS VALIDATION invalid setter leaves state case 0
+PASS VALIDATION direct validation case 1
+PASS VALIDATION no file mutation case 1
+PASS VALIDATION invalid setter leaves state case 1
+PASS VALIDATION direct validation case 2
+PASS VALIDATION no file mutation case 2
+PASS VALIDATION invalid setter leaves state case 2
+PASS VALIDATION direct validation case 3
+PASS VALIDATION no file mutation case 3
+PASS VALIDATION invalid setter leaves state case 3
+PASS VALIDATION direct validation case 4
+PASS VALIDATION no file mutation case 4
+PASS VALIDATION invalid setter leaves state case 4
+PASS VALIDATION direct validation case 5
+PASS VALIDATION no file mutation case 5
+PASS VALIDATION invalid setter leaves state case 5
+PASS VALIDATION direct validation case 6
+PASS VALIDATION no file mutation case 6
+PASS VALIDATION invalid setter leaves state case 6
+PASS VALIDATION direct validation case 7
+PASS VALIDATION no file mutation case 7
+PASS VALIDATION invalid setter leaves state case 7
+PASS VALIDATION direct validation case 8
+PASS VALIDATION no file mutation case 8
+PASS VALIDATION invalid setter leaves state case 8
+PASS VALIDATION direct validation case 9
+PASS VALIDATION no file mutation case 9
+PASS VALIDATION invalid setter leaves state case 9
+PASS VALIDATION direct validation case 10
+PASS VALIDATION no file mutation case 10
+PASS VALIDATION invalid setter leaves state case 10
+PASS VALIDATION direct validation case 11
+PASS VALIDATION no file mutation case 11
+PASS VALIDATION invalid setter leaves state case 11
+PASS VALIDATION direct validation case 12
+PASS VALIDATION no file mutation case 12
+PASS VALIDATION invalid setter leaves state case 12
+PASS VALIDATION direct validation case 13
+PASS VALIDATION no file mutation case 13
+PASS VALIDATION invalid setter leaves state case 13
+PASS VALIDATION direct validation case 14
+PASS VALIDATION no file mutation case 14
+PASS VALIDATION invalid setter leaves state case 14
+PASS VALIDATION direct validation case 15
+PASS VALIDATION no file mutation case 15
+PASS VALIDATION invalid setter leaves state case 15
+PASS VALIDATION direct validation case 16
+PASS VALIDATION no file mutation case 16
+PASS VALIDATION invalid setter leaves state case 16
+PASS VALIDATION direct validation case 17
+PASS VALIDATION no file mutation case 17
+PASS VALIDATION invalid setter leaves state case 17
+PASS VALIDATION direct validation case 18
+PASS VALIDATION no file mutation case 18
+PASS VALIDATION invalid setter leaves state case 18
+PASS VALIDATION direct validation case 19
+PASS VALIDATION no file mutation case 19
+PASS VALIDATION invalid setter leaves state case 19
+PASS VALIDATION direct validation case 20
+PASS VALIDATION no file mutation case 20
+PASS VALIDATION invalid setter leaves state case 20
+PASS VALIDATION direct validation case 21
+PASS VALIDATION no file mutation case 21
+PASS VALIDATION invalid setter leaves state case 21
+PASS VALIDATION direct validation case 22
+PASS VALIDATION no file mutation case 22
+PASS VALIDATION invalid setter leaves state case 22
+PASS VALIDATION direct validation case 23
+PASS VALIDATION no file mutation case 23
+PASS VALIDATION invalid setter leaves state case 23
+PASS VALIDATION direct validation case 24
+PASS VALIDATION no file mutation case 24
+PASS VALIDATION invalid setter leaves state case 24
+PASS VALIDATION direct validation case 25
+PASS VALIDATION no file mutation case 25
+PASS VALIDATION invalid setter leaves state case 25
+PASS VALIDATION direct validation case 26
+PASS VALIDATION no file mutation case 26
+PASS VALIDATION invalid setter leaves state case 26
+PASS VALIDATION direct validation case 27
+PASS VALIDATION no file mutation case 27
+PASS VALIDATION invalid setter leaves state case 27
+PASS VALIDATION direct validation case 28
+PASS VALIDATION no file mutation case 28
+PASS VALIDATION invalid setter leaves state case 28
+PASS VALIDATION direct validation case 29
+PASS VALIDATION no file mutation case 29
+PASS VALIDATION invalid setter leaves state case 29
+PASS VALIDATION direct validation case 30
+PASS VALIDATION no file mutation case 30
+PASS VALIDATION invalid setter leaves state case 30
+PASS VALIDATION direct validation case 31
+PASS VALIDATION no file mutation case 31
+PASS VALIDATION invalid setter leaves state case 31
+PASS VALIDATION direct validation case 32
+PASS VALIDATION no file mutation case 32
+PASS VALIDATION invalid setter leaves state case 32
+PASS VALIDATION direct validation case 33
+PASS VALIDATION no file mutation case 33
+PASS VALIDATION invalid setter leaves state case 33
+PASS VALIDATION direct validation case 34
+PASS VALIDATION no file mutation case 34
+PASS VALIDATION invalid setter leaves state case 34
 PASS STYLE AST no auto properties lambdas LINQ; fields; 65 columns
-TOTAL: 27 passed
+TOTAL: 135 passed
 
 Консольные сценарии: 11/11 успешно.
 Сборка: 0 ошибок, 0 предупреждений.
 dotnet format whitespace --verify-no-changes: успешно.
-Повторная проверка 28.10.2026:
-Имена типов, методов, свойств, параметров и переменных проверены по AST.
 IDE0044, IDE0059, IDE0060: замечаний нет.
-Явные типы, полные new и блочные namespace сохранены по образцу Lab2.
+35 случаев некорректных прямых вызовов без ConsoleInput:
+все отклонены, поля и исходные файлы сохранены.
+XML-сериализация с проверяющими сеттерами: успешно.

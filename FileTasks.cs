@@ -11,6 +11,8 @@ namespace Lab3
         public static void FillBinary(string path, int count,
             int min, int max, Random random)
         {
+            CheckPath(path);
+            CheckGeneration(count, min, max, random);
             using BinaryWriter writer = new BinaryWriter(
                 File.Create(path));
             int index;
@@ -25,8 +27,10 @@ namespace Lab3
             string source, string target, int k)
         {
             CheckDivisor(k);
+            CheckDifferentPaths(source, target);
             using BinaryReader reader = new BinaryReader(
                 File.OpenRead(source));
+            CheckBinaryLength(reader.BaseStream.Length);
             using BinaryWriter writer = new BinaryWriter(
                 File.Create(target));
             while (reader.BaseStream.Position
@@ -42,8 +46,10 @@ namespace Lab3
 
         public static void PrintBinary(string path)
         {
+            CheckPath(path);
             using BinaryReader reader = new BinaryReader(
                 File.OpenRead(path));
+            CheckBinaryLength(reader.BaseStream.Length);
             while (reader.BaseStream.Position
                 < reader.BaseStream.Length)
             {
@@ -55,6 +61,8 @@ namespace Lab3
         public static void FillToys(
             string binaryPath, string xmlPath, Toy[] toys)
         {
+            CheckDifferentPaths(binaryPath, xmlPath);
+            CheckToys(toys);
             using (BinaryWriter writer = new BinaryWriter(
                 File.Create(binaryPath), Encoding.UTF8))
             {
@@ -75,6 +83,7 @@ namespace Lab3
 
         public static Toy[] ReadToysBinary(string path)
         {
+            CheckPath(path);
             using BinaryReader reader = new BinaryReader(
                 File.OpenRead(path), Encoding.UTF8);
             int count = reader.ReadInt32();
@@ -87,35 +96,50 @@ namespace Lab3
             int index;
             for (index = 0; index < count; index++)
             {
-                toys[index] = new Toy(reader.ReadString(),
-                    reader.ReadDecimal(), reader.ReadInt32(),
-                    reader.ReadInt32());
+                try
+                {
+                    toys[index] = new Toy(reader.ReadString(),
+                        reader.ReadDecimal(), reader.ReadInt32(),
+                        reader.ReadInt32());
+                }
+                catch (ArgumentException error)
+                {
+                    throw new InvalidDataException(
+                        "Некорректная игрушка в файле.", error);
+                }
             }
             return toys;
         }
 
         public static Toy[] ReadToysXml(string path)
         {
+            CheckPath(path);
             XmlSerializer serializer = new XmlSerializer(
                 typeof(Toy[]));
             using FileStream stream = File.OpenRead(path);
-            Toy[] toys = (Toy[])serializer.Deserialize(stream);
-            foreach (Toy toy in toys)
+            try
             {
-                if (string.IsNullOrWhiteSpace(toy.Name)
-                    || toy.Price < 0 || toy.MinAge < 0
-                    || toy.MaxAge < toy.MinAge)
-                {
-                    throw new InvalidDataException(
-                        "Некорректная игрушка в XML.");
-                }
+                Toy[] toys = (Toy[])serializer.Deserialize(
+                    stream);
+                CheckToys(toys);
+                return toys;
             }
-            return toys;
+            catch (InvalidOperationException error)
+            {
+                throw new InvalidDataException(
+                    "Некорректный XML игрушек.", error);
+            }
+            catch (ArgumentException error)
+            {
+                throw new InvalidDataException(
+                    "Некорректные данные игрушек.", error);
+            }
         }
 
         public static bool FindConstructorPrice(
             Toy[] toys, out decimal price)
         {
+            CheckToys(toys);
             bool found = false;
             price = 0;
             foreach (Toy toy in toys)
@@ -137,6 +161,14 @@ namespace Lab3
         public static void FillText(string path, int count,
             int min, int max, int perLine, Random random)
         {
+            CheckPath(path);
+            CheckGeneration(count, min, max, random);
+            if (perLine < 1 || perLine > 100)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(perLine),
+                    "Чисел в строке должно быть 1-100.");
+            }
             using StreamWriter writer = new StreamWriter(
                 path, false, Encoding.UTF8);
             int index;
@@ -159,6 +191,7 @@ namespace Lab3
 
         public static long SumAtIndex(string path)
         {
+            CheckPath(path);
             using StreamReader reader = new StreamReader(path);
             string line = reader.ReadLine();
             long index = 0;
@@ -180,6 +213,7 @@ namespace Lab3
             string path, int k, out BigInteger product)
         {
             CheckDivisor(k);
+            CheckPath(path);
             product = BigInteger.One;
             bool found = false;
             using StreamReader reader = new StreamReader(path);
@@ -205,12 +239,25 @@ namespace Lab3
         public static void FillLines(
             string path, string[] lines)
         {
+            CheckPath(path);
+            ArgumentNullException.ThrowIfNull(lines);
+            CheckCount(lines.Length);
+            foreach (string line in lines)
+            {
+                if (line == null)
+                {
+                    throw new ArgumentException(
+                        "Строка не может быть null.",
+                        nameof(lines));
+                }
+            }
             File.WriteAllLines(path, lines, Encoding.UTF8);
         }
 
         public static void CopyWithoutRussian(
             string source, string target)
         {
+            CheckDifferentPaths(source, target);
             using StreamReader reader = new StreamReader(source);
             using StreamWriter writer = new StreamWriter(
                 target, false, Encoding.UTF8);
@@ -232,6 +279,67 @@ namespace Lab3
                     writer.WriteLine(line);
                 }
                 line = reader.ReadLine();
+            }
+        }
+
+        private static void CheckGeneration(
+            int count, int min, int max, Random random)
+        {
+            CheckCount(count);
+            ArgumentNullException.ThrowIfNull(random);
+            if (min > max)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(max),
+                    "Верхняя граница меньше нижней.");
+            }
+        }
+
+        private static void CheckCount(int count)
+        {
+            if (count < 0 || count > 10000)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(count),
+                    "Количество должно быть от 0 до 10000.");
+            }
+        }
+
+        private static void CheckToys(Toy[] toys)
+        {
+            ArgumentNullException.ThrowIfNull(toys);
+            CheckCount(toys.Length);
+            foreach (Toy toy in toys)
+            {
+                toy.Validate();
+            }
+        }
+
+        private static void CheckPath(string path)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        }
+
+        private static void CheckDifferentPaths(
+            string source, string target)
+        {
+            CheckPath(source);
+            CheckPath(target);
+            if (string.Equals(Path.GetFullPath(source),
+                Path.GetFullPath(target),
+                StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(
+                    "Файлы ввода и вывода должны различаться.");
+            }
+        }
+
+        private static void CheckBinaryLength(long length)
+        {
+            if (length % sizeof(int) != 0)
+            {
+                throw new InvalidDataException(
+                    "Длина файла не кратна размеру Int32.");
             }
         }
 
