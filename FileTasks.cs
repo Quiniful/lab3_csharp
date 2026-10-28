@@ -15,8 +15,7 @@ namespace Lab3
             CheckGeneration(count, min, max, random);
             using BinaryWriter writer = new BinaryWriter(
                 File.Create(path));
-            int index;
-            for (index = 0; index < count; index++)
+            for (int index = 0; index < count; index++)
             {
                 writer.Write((int)random.NextInt64(
                     min, (long)max + 1));
@@ -93,8 +92,7 @@ namespace Lab3
                     "Некорректное число игрушек.");
             }
             Toy[] toys = new Toy[count];
-            int index;
-            for (index = 0; index < count; index++)
+            for (int index = 0; index < count; index++)
             {
                 try
                 {
@@ -146,13 +144,11 @@ namespace Lab3
             {
                 if (string.Equals(toy.Name.Trim(),
                     "конструктор",
-                    StringComparison.OrdinalIgnoreCase))
+                    StringComparison.OrdinalIgnoreCase)
+                    && (!found || toy.Price > price))
                 {
-                    if (!found || toy.Price > price)
-                    {
-                        price = toy.Price;
-                        found = true;
-                    }
+                    price = toy.Price;
+                    found = true;
                 }
             }
             return found;
@@ -171,21 +167,15 @@ namespace Lab3
             }
             using StreamWriter writer = new StreamWriter(
                 path, false, Encoding.UTF8);
-            int index;
-            for (index = 0; index < count; index++)
+            for (int index = 0; index < count; index++)
             {
                 int value = (int)random.NextInt64(
                     min, (long)max + 1);
                 writer.Write(value);
-                if ((index + 1) % perLine == 0
-                    || index == count - 1)
-                {
-                    writer.WriteLine();
-                }
-                else
-                {
-                    writer.Write(' ');
-                }
+                bool endOfLine = (index + 1) % perLine == 0
+                    || index == count - 1;
+                writer.Write(
+                    endOfLine ? Environment.NewLine : " ");
             }
         }
 
@@ -193,10 +183,10 @@ namespace Lab3
         {
             CheckPath(path);
             using StreamReader reader = new StreamReader(path);
-            string line = reader.ReadLine();
+            string line;
             long index = 0;
             long sum = 0;
-            while (line != null)
+            while ((line = reader.ReadLine()) != null)
             {
                 int value = ParseNumber(line);
                 if (value == index)
@@ -204,7 +194,6 @@ namespace Lab3
                     sum = checked(sum + value);
                 }
                 index++;
-                line = reader.ReadLine();
             }
             return sum;
         }
@@ -217,8 +206,8 @@ namespace Lab3
             product = BigInteger.One;
             bool found = false;
             using StreamReader reader = new StreamReader(path);
-            string line = reader.ReadLine();
-            while (line != null)
+            string line;
+            while ((line = reader.ReadLine()) != null)
             {
                 string[] parts = line.Split((char[])null,
                     StringSplitOptions.RemoveEmptyEntries);
@@ -231,7 +220,6 @@ namespace Lab3
                         found = true;
                     }
                 }
-                line = reader.ReadLine();
             }
             return found;
         }
@@ -261,8 +249,8 @@ namespace Lab3
             using StreamReader reader = new StreamReader(source);
             using StreamWriter writer = new StreamWriter(
                 target, false, Encoding.UTF8);
-            string line = reader.ReadLine();
-            while (line != null)
+            string line;
+            while ((line = reader.ReadLine()) != null)
             {
                 bool hasRussian = false;
                 foreach (char symbol in line)
@@ -278,7 +266,6 @@ namespace Lab3
                 {
                     writer.WriteLine(line);
                 }
-                line = reader.ReadLine();
             }
         }
 

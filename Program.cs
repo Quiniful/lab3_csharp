@@ -12,10 +12,9 @@ namespace Lab3
         private static void Main()
         {
             Console.OutputEncoding = Encoding.UTF8;
-            Program program = new Program();
             try
             {
-                program.Run();
+                new Program().Run();
             }
             catch (EndOfStreamException)
             {
@@ -51,11 +50,8 @@ namespace Lab3
                         "Переполнение! Введите меньшие числа.");
                 }
                 catch (IOException error)
+                    when (error is not EndOfStreamException)
                 {
-                    if (error is EndOfStreamException)
-                    {
-                        throw;
-                    }
                     Console.WriteLine(error.Message);
                 }
                 catch (UnauthorizedAccessException error)
@@ -111,15 +107,12 @@ namespace Lab3
             Matrix first = ReadMatrix("1, ввод по столбцам");
             int size = ConsoleInput.ReadRange(
                 "Размер двух квадратных матриц (1-30): ", 1, 30);
-            Random random = new Random();
-            Matrix second = new Matrix(size, random);
-            Matrix third = new Matrix(size);
             Console.WriteLine("Первая матрица:");
             Console.WriteLine(first);
             Console.WriteLine("Четырёхзначные числа:");
-            Console.WriteLine(second);
+            Console.WriteLine(new Matrix(size, new Random()));
             Console.WriteLine("Заполнение по образцу:");
-            Console.WriteLine(third);
+            Console.WriteLine(new Matrix(size));
         }
 
         private void ShowPath()
@@ -150,15 +143,10 @@ namespace Lab3
             Matrix b = new Matrix(columns, rows);
             Console.WriteLine("Введите C по столбцам:");
             Matrix c = new Matrix(rows, columns);
-            Console.WriteLine("A:");
-            Console.WriteLine(a);
-            Console.WriteLine("B:");
-            Console.WriteLine(b);
-            Console.WriteLine("C:");
-            Console.WriteLine(c);
-            Matrix result = Matrix.CalculateExpression(a, b, c);
+            Console.WriteLine($"A:\n{a}B:\n{b}C:\n{c}");
             Console.WriteLine("A^T - (B + C^T):");
-            Console.WriteLine(result);
+            Console.WriteLine(
+                Matrix.CalculateExpression(a, b, c));
         }
 
         private void WorkWithNumbers(int task)
@@ -203,15 +191,9 @@ namespace Lab3
                 BigInteger product;
                 bool found = FileTasks.ProductMultiples(
                     "data/product.txt", k, out product);
-                if (found)
-                {
-                    Console.WriteLine(
-                        $"Произведение: {product}");
-                }
-                else
-                {
-                    Console.WriteLine("Кратных элементов нет.");
-                }
+                Console.WriteLine(found
+                    ? $"Произведение: {product}"
+                    : "Кратных элементов нет.");
             }
         }
 
@@ -220,8 +202,7 @@ namespace Lab3
             int count = ConsoleInput.ReadRange(
                 "Количество игрушек (0-10000): ", 0, 10000);
             Toy[] toys = new Toy[count];
-            int index;
-            for (index = 0; index < count; index++)
+            for (int index = 0; index < count; index++)
             {
                 string name = ConsoleInput.ReadText(
                     "Название: ");
@@ -235,28 +216,22 @@ namespace Lab3
             }
             FileTasks.FillToys("data/toys.bin",
                 "data/toys.xml", toys);
-            Toy[] binary = FileTasks.ReadToysBinary(
-                "data/toys.bin");
-            Toy[] xml = FileTasks.ReadToysXml("data/toys.xml");
             Console.WriteLine("Результат из бинарного файла:");
-            PrintPrice(binary);
+            PrintPrice(FileTasks.ReadToysBinary(
+                "data/toys.bin"));
             Console.WriteLine(
                 "Результат после XML-десериализации:");
-            PrintPrice(xml);
+            PrintPrice(FileTasks.ReadToysXml("data/toys.xml"));
         }
 
         private void PrintPrice(Toy[] toys)
         {
             decimal price;
-            if (FileTasks.FindConstructorPrice(toys, out price))
-            {
-                Console.WriteLine(
-                    $"Самый дорогой конструктор: {price} руб.");
-            }
-            else
-            {
-                Console.WriteLine("Конструктор не найден.");
-            }
+            bool found = FileTasks.FindConstructorPrice(
+                toys, out price);
+            Console.WriteLine(found
+                ? $"Самый дорогой конструктор: {price} руб."
+                : "Конструктор не найден.");
         }
 
         private void WorkWithLines()
@@ -264,8 +239,7 @@ namespace Lab3
             int count = ConsoleInput.ReadRange(
                 "Количество строк (0-10000): ", 0, 10000);
             string[] lines = new string[count];
-            int index;
-            for (index = 0; index < count; index++)
+            for (int index = 0; index < count; index++)
             {
                 lines[index] = ConsoleInput.ReadLine("Строка: ");
             }

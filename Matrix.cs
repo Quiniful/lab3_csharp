@@ -13,11 +13,9 @@ namespace Lab3
         {
             CheckSize(rows, columns);
             _values = new int[rows, columns];
-            int column;
-            int row;
-            for (column = 0; column < columns; column++)
+            for (int column = 0; column < columns; column++)
             {
-                for (row = 0; row < rows; row++)
+                for (int row = 0; row < rows; row++)
                 {
                     _values[row, column] = ConsoleInput.ReadInt(
                         $"[{row}, {column}]: ");
@@ -30,15 +28,13 @@ namespace Lab3
             CheckSize(size, size);
             ArgumentNullException.ThrowIfNull(random);
             _values = new int[size, size];
-            int row;
-            int column;
-            for (row = 0; row < size; row++)
+
+            for (int row = 0; row < size; row++)
             {
-                for (column = 0; column < size; column++)
+                for (int column = 0; column < size; column++)
                 {
                     int number = 2 * random.Next(1, 5);
-                    int digit;
-                    for (digit = 0; digit < 3; digit++)
+                    for (int digit = 0; digit < 3; digit++)
                     {
                         number = number * 10
                             + 2 * random.Next(0, 5);
@@ -52,20 +48,14 @@ namespace Lab3
         {
             CheckSize(size, size);
             _values = new int[size, size];
-            int row;
-            int column;
-            for (row = 0; row < size; row++)
+
+            for (int row = 0; row < size; row++)
             {
-                for (column = row; column < size; column++)
+                for (int column = row; column < size; column++)
                 {
-                    if ((column - row) % 2 == 0)
-                    {
-                        _values[row, column] = row + 1;
-                    }
-                    else
-                    {
-                        _values[row, column] = size - column;
-                    }
+                    _values[row, column] =
+                        (column - row) % 2 == 0
+                        ? row + 1 : size - column;
                 }
             }
         }
@@ -103,17 +93,11 @@ namespace Lab3
 
         private static void CheckSize(int rows, int columns)
         {
-            if (rows < 1 || rows > 30)
+            if (rows < 1 || rows > 30
+                || columns < 1 || columns > 30)
             {
-                throw new ArgumentOutOfRangeException(
-                    nameof(rows),
-                    "Число строк должно быть 1-30.");
-            }
-            if (columns < 1 || columns > 30)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(columns),
-                    "Число столбцов должно быть 1-30.");
+                throw new ArgumentException(
+                    "Размеры матрицы должны быть 1-30.");
             }
         }
 
@@ -129,11 +113,10 @@ namespace Lab3
         public Matrix Transpose()
         {
             int[,] result = new int[Columns, Rows];
-            int row;
-            int column;
-            for (row = 0; row < Rows; row++)
+
+            for (int row = 0; row < Rows; row++)
             {
-                for (column = 0; column < Columns; column++)
+                for (int column = 0; column < Columns; column++)
                 {
                     result[column, row] = _values[row, column];
                 }
@@ -162,22 +145,15 @@ namespace Lab3
                     "Размеры матриц должны совпадать.");
             }
             int[,] result = new int[a.Rows, a.Columns];
-            int row;
-            int column;
-            for (row = 0; row < a.Rows; row++)
+
+            for (int row = 0; row < a.Rows; row++)
             {
-                for (column = 0; column < a.Columns; column++)
+                for (int column = 0; column < a.Columns;
+                    column++)
                 {
-                    if (subtract)
-                    {
-                        result[row, column] = checked(
-                            a[row, column] - b[row, column]);
-                    }
-                    else
-                    {
-                        result[row, column] = checked(
-                            a[row, column] + b[row, column]);
-                    }
+                    result[row, column] = checked(subtract
+                        ? a[row, column] - b[row, column]
+                        : a[row, column] + b[row, column]);
                 }
             }
             return new Matrix(result);
@@ -187,21 +163,17 @@ namespace Lab3
         {
             int min = _values[0, 0];
             int max = min;
-            int row;
-            int column;
-            for (row = 0; row < Rows; row++)
+
+            foreach (int value in _values)
             {
-                for (column = 0; column < Columns; column++)
-                {
-                    min = Math.Min(min, _values[row, column]);
-                    max = Math.Max(max, _values[row, column]);
-                }
+                min = Math.Min(min, value);
+                max = Math.Max(max, value);
             }
             List<Point> minima = new List<Point>();
             List<Point> maxima = new List<Point>();
-            for (row = 0; row < Rows; row++)
+            for (int row = 0; row < Rows; row++)
             {
-                for (column = 0; column < Columns; column++)
+                for (int column = 0; column < Columns; column++)
                 {
                     Point point = new Point(row, column);
                     if (_values[row, column] == min)
@@ -247,15 +219,14 @@ namespace Lab3
         {
             StringBuilder result = new StringBuilder();
             int width = 1;
-            int row;
-            int column;
+
             foreach (int value in _values)
             {
                 width = Math.Max(width, value.ToString().Length);
             }
-            for (row = 0; row < Rows; row++)
+            for (int row = 0; row < Rows; row++)
             {
-                for (column = 0; column < Columns; column++)
+                for (int column = 0; column < Columns; column++)
                 {
                     if (column > 0)
                     {

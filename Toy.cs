@@ -30,7 +30,7 @@ namespace Lab3
             }
             set
             {
-                CheckName(value);
+                ArgumentException.ThrowIfNullOrWhiteSpace(value);
                 _name = value.Trim();
             }
         }
@@ -86,19 +86,9 @@ namespace Lab3
 
         public void Validate()
         {
-            CheckName(_name);
+            ArgumentException.ThrowIfNullOrWhiteSpace(_name);
             CheckPrice(_price);
             CheckAgeRange(_minAge, _maxAge);
-        }
-
-        private static void CheckName(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException(
-                    "Название не может быть пустым.",
-                    nameof(name));
-            }
         }
 
         private static void CheckPrice(decimal price)
@@ -114,17 +104,10 @@ namespace Lab3
         private static void CheckAgeRange(
             int minAge, int maxAge)
         {
-            if (minAge < 0 || minAge > 150)
+            if (minAge < 0 || maxAge > 150 || maxAge < minAge)
             {
-                throw new ArgumentOutOfRangeException(
-                    nameof(minAge),
-                    "Возраст должен быть 0-150.");
-            }
-            if (maxAge < minAge || maxAge > 150)
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(maxAge),
-                    "Верхний возраст должен быть min-150.");
+                throw new ArgumentException(
+                    "Возраст должен быть 0-150, min <= max.");
             }
         }
     }

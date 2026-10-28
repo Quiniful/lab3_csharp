@@ -32,16 +32,12 @@ namespace Lab3
 
         public static int ReadInt(string message)
         {
-            while (true)
+            int result;
+            while (!int.TryParse(ReadLine(message), out result))
             {
-                string input = ReadLine(message).Trim();
-                int result;
-                if (int.TryParse(input, out result))
-                {
-                    return result;
-                }
                 Console.WriteLine("Введите целое число Int32.");
             }
+            return result;
         }
 
         public static int ReadRange(
