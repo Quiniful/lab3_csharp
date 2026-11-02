@@ -19,9 +19,10 @@ namespace Lab3
 
         public static string ReadText(string message)
         {
+            string input;
             while (true)
             {
-                string input = ReadLine(message).Trim();
+                input = ReadLine(message).Trim();
                 if (input.Length > 0)
                 {
                     return input;
@@ -43,9 +44,10 @@ namespace Lab3
         public static int ReadRange(
             string message, int min, int max)
         {
+            int result;
             while (true)
             {
-                int result = ReadInt(message);
+                result = ReadInt(message);
                 if (result >= min && result <= max)
                 {
                     return result;
@@ -57,9 +59,10 @@ namespace Lab3
 
         public static int ReadDivisor()
         {
+            int result;
             while (true)
             {
-                int result = ReadInt("Введите k (не ноль): ");
+                result = ReadInt("Введите k (не ноль): ");
                 if (result != 0)
                 {
                     return result;
@@ -70,11 +73,12 @@ namespace Lab3
 
         public static decimal ReadPrice()
         {
+            string input;
+            decimal result;
             while (true)
             {
-                string input = ReadLine("Цена в рублях: ");
+                input = ReadLine("Цена в рублях: ");
                 input = input.Trim().Replace(',', '.');
-                decimal result;
                 if (decimal.TryParse(input,
                     NumberStyles.AllowDecimalPoint,
                     CultureInfo.InvariantCulture, out result)

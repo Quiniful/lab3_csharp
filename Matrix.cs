@@ -28,12 +28,13 @@ namespace Lab3
             CheckSize(size, size);
             ArgumentNullException.ThrowIfNull(random);
             _values = new int[size, size];
+            int number;
 
             for (int row = 0; row < size; row++)
             {
                 for (int column = 0; column < size; column++)
                 {
-                    int number = 2 * random.Next(1, 5);
+                    number = 2 * random.Next(1, 5);
                     for (int digit = 0; digit < 3; digit++)
                     {
                         number = number * 10
@@ -171,11 +172,12 @@ namespace Lab3
             }
             List<Point> minima = new List<Point>();
             List<Point> maxima = new List<Point>();
+            Point point;
             for (int row = 0; row < Rows; row++)
             {
                 for (int column = 0; column < Columns; column++)
                 {
-                    Point point = new Point(row, column);
+                    point = new Point(row, column);
                     if (_values[row, column] == min)
                     {
                         minima.Add(point);
@@ -189,11 +191,12 @@ namespace Lab3
             Point start = maxima[0];
             Point finish = minima[0];
             int best = int.MaxValue;
+            int distance;
             foreach (Point high in maxima)
             {
                 foreach (Point low in minima)
                 {
-                    int distance = Math.Max(
+                    distance = Math.Max(
                         Math.Abs(high.X - low.X),
                         Math.Abs(high.Y - low.Y));
                     if (distance < best)

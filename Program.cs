@@ -123,9 +123,10 @@ namespace Lab3
             Console.WriteLine(
                 $"Количество шагов: {path.Count - 1}");
             Console.WriteLine("Путь от максимума к минимуму:");
+            int value;
             foreach (Point point in path)
             {
-                int value = matrix[point.X, point.Y];
+                value = matrix[point.X, point.Y];
                 Console.WriteLine(
                     $"[{point.X}, {point.Y}] = {value}");
             }
@@ -202,14 +203,18 @@ namespace Lab3
             int count = ConsoleInput.ReadRange(
                 "Количество игрушек (0-10000): ", 0, 10000);
             Toy[] toys = new Toy[count];
+            string name;
+            decimal price;
+            int minAge;
+            int maxAge;
             for (int index = 0; index < count; index++)
             {
-                string name = ConsoleInput.ReadText(
+                name = ConsoleInput.ReadText(
                     "Название: ");
-                decimal price = ConsoleInput.ReadPrice();
-                int minAge = ConsoleInput.ReadRange(
+                price = ConsoleInput.ReadPrice();
+                minAge = ConsoleInput.ReadRange(
                     "Минимальный возраст: ", 0, 150);
-                int maxAge = ConsoleInput.ReadRange(
+                maxAge = ConsoleInput.ReadRange(
                     "Максимальный возраст: ", minAge, 150);
                 toys[index] = new Toy(
                     name, price, minAge, maxAge);

@@ -32,10 +32,11 @@ namespace Lab3
             CheckBinaryLength(reader.BaseStream.Length);
             using BinaryWriter writer = new BinaryWriter(
                 File.Create(target));
+            int value;
             while (reader.BaseStream.Position
                 < reader.BaseStream.Length)
             {
-                int value = reader.ReadInt32();
+                value = reader.ReadInt32();
                 if ((long)value % k == 0)
                 {
                     writer.Write(value);
@@ -167,12 +168,14 @@ namespace Lab3
             }
             using StreamWriter writer = new StreamWriter(
                 path, false, Encoding.UTF8);
+            int value;
+            bool endOfLine;
             for (int index = 0; index < count; index++)
             {
-                int value = (int)random.NextInt64(
+                value = (int)random.NextInt64(
                     min, (long)max + 1);
                 writer.Write(value);
-                bool endOfLine = (index + 1) % perLine == 0
+                endOfLine = (index + 1) % perLine == 0
                     || index == count - 1;
                 writer.Write(
                     endOfLine ? Environment.NewLine : " ");
@@ -186,9 +189,10 @@ namespace Lab3
             string line;
             long index = 0;
             long sum = 0;
+            int value;
             while ((line = reader.ReadLine()) != null)
             {
-                int value = ParseNumber(line);
+                value = ParseNumber(line);
                 if (value == index)
                 {
                     sum = checked(sum + value);
@@ -207,13 +211,15 @@ namespace Lab3
             bool found = false;
             using StreamReader reader = new StreamReader(path);
             string line;
+            string[] parts;
+            int value;
             while ((line = reader.ReadLine()) != null)
             {
-                string[] parts = line.Split((char[])null,
+                parts = line.Split((char[])null,
                     StringSplitOptions.RemoveEmptyEntries);
                 foreach (string part in parts)
                 {
-                    int value = ParseNumber(part);
+                    value = ParseNumber(part);
                     if ((long)value % k == 0)
                     {
                         product *= value;
@@ -250,9 +256,10 @@ namespace Lab3
             using StreamWriter writer = new StreamWriter(
                 target, false, Encoding.UTF8);
             string line;
+            bool hasRussian;
             while ((line = reader.ReadLine()) != null)
             {
-                bool hasRussian = false;
+                hasRussian = false;
                 foreach (char symbol in line)
                 {
                     if ((symbol >= 'А' && symbol <= 'я')
