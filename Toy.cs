@@ -3,16 +3,12 @@ using System.Xml.Serialization;
 
 namespace Lab3
 {
-    public class Toy
+    public struct Toy
     {
         private string _name;
         private decimal _price;
         private int _minAge;
         private int _maxAge;
-
-        public Toy() : this("Игрушка", 0, 0, 0)
-        {
-        }
 
         public Toy(string name, decimal price,
             int minAge, int maxAge)
