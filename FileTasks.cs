@@ -305,6 +305,7 @@ namespace Lab3
             CheckCount(toys.Length);
             foreach (Toy toy in toys)
             {
+                ArgumentNullException.ThrowIfNull(toy);
                 toy.Validate();
             }
         }
